@@ -5,22 +5,7 @@ GO
 CREATE SCHEMA surrogation;
 
 GO
---drop procedure surrogate_table;
---drop table surrogation.employeesurrogation;
-/*
-CREATE TABLE surrogation.employeeSurrogation (
-    s_emp INT IDENTITY(1, 1) PRIMARY KEY,
-    EmployeeID INT,
-    dataSource VARCHAR(50)
-);
-GO
-*/
--- Create the stored procedure
---drop procedure surrogate_table
---drop table surrogation.employeeSurrogation
---drop table surrogation.AssignmentSurrogation
---drop table surrogation.DepartmentSurrogation
---drop table surrogation.ProjectSurrogation
+
 CREATE  PROCEDURE surrogate_table
     @mappingtable NVARCHAR(128),
     @surr_key NVARCHAR(128),
@@ -135,20 +120,4 @@ EXEC dbo.surrogate_table
     --@sourceSchema = 'loading_source',
     --@sourceDatabase = 'SourceDB',
     @sourceTable = 'Assignments_temp_source';
-/*
-INSERT INTO 
-    surrogation.employeeSurrogation(EmployeeID, dataSource)
-SELECT 
-    CompanyDB.Staff.Employees.EmployeeID, 'CompanyDB'
-FROM
-    CompanyDB.Staff.Employees;
 
-INSERT INTO 
-    surrogation.employeeSurrogation(EmployeeID, dataSource)
-SELECT 
-    Employees_temp.EmployeeID, 'SourceDB'
-FROM
-    loading_source.Employees_temp;
-
-select * FROM surrogation.employeeSurrogation;
-*/
