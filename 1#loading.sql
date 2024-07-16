@@ -1,29 +1,12 @@
 
 CREATE DATABASE DataWarehouse;
+
 GO
-/*
-select 'DROP TABLE ' + TABLE_SCHEMA + '.' + TABLE_NAME FROM INFORMATION_SCHEMA.TABLEs;
-DROP TABLE surrogation.employeeSurrogation
-DROP TABLE loading_sources.Departments_temp_source
-DROP TABLE loading_sources.Employees_temp_source
-DROP TABLE loading_sources.Projects_temp_source
-DROP TABLE loading_sources.Assignments_temp_source
-DROP TABLE loading_sources.Customers_temp_source
-DROP TABLE loading_sources.Orders_temp_source
-DROP TABLE loading_sources.Products_temp_source
-DROP TABLE loading_sources.OrderDetails_temp_source
-DROP TABLE loading_sources.Departments_temp_company
-DROP TABLE loading_sources.Employees_temp_company
-DROP TABLE loading_sources.Projects_temp_company
-DROP TABLE loading_sources.Assignments_temp_company
-DROP procedure loading_temp_tables; 
-*/
+
 USE DataWarehouse;
 GO
 
 CREATE SCHEMA loading_sources;
-
-
 
 GO
 --drop PROCEDURE loading_temp_tables;
@@ -35,7 +18,6 @@ CREATE PROCEDURE loading_temp_tables
 AS
 BEGIN
     DECLARE @sql2 NVARCHAR(MAX);
-
     -- Check if the table already exists
     IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = @tempTableName AND TABLE_SCHEMA = 'loading_sources')
     BEGIN
@@ -50,11 +32,6 @@ BEGIN
     END;
 END;
 GO
---SELECT * FROM CompanyDB.Staff.Departments;
---drop table loading_sources.Departments_temp_source
---drop table loading_sources.Employees_temp_source
---drop table loading_sources.Projects_temp_source
---drop table loading_sources.Assignments_temp_source
 
 --CompanyDB, Staff Schema
 EXEC loading_temp_tables
