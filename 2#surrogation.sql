@@ -46,7 +46,6 @@ BEGIN
                 'dataSource VARCHAR(20));'-- DEFAULT ''' + @dataSource + ''');';
     END;
     -- Insert data into the new table from the specified schema and database
-    IF NOT EXISTS (SELECT 1 FROM @mappingtable WHERE @mappingtable.@id)
     SET @sql2 = 'INSERT INTO surrogation.' + QUOTENAME(@mappingtable) + '(' + 
                 QUOTENAME(@id) + ',' +  'dataSource'  + ') ' +
                 'SELECT ' + QUOTENAME(@id) +  ', ''' + @dataSource + ''' '  + ' ' +-- ' ''' + @dataSource + ''' ' +
