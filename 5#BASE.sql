@@ -71,26 +71,43 @@ SELECT
 INTO 
     base_customers
  FROM 
-    CompanyDB.Sales.Customers;
+    loading_sources.Customers_temp_company;
 
 SELECT 
     * 
 INTO 
     base_orders
  FROM 
-    CompanyDB.Sales.Orders;
+    loading_sources.orders_temp_company;
 
 SELECT 
     * 
 INTO 
     base_products
  FROM 
-    CompanyDB.Sales.Products;
+    loading_sources.products_temp_company;
 
 SELECT 
     * 
 INTO 
     base_orderDetails
  FROM 
-    CompanyDB.Sales.OrderDetails;
+    loading_sources.orderDetails_temp_company;
 
+
+SELECT 'DROP TABLE ' + TABLE_SCHEMA + '.' + TABLE_NAME
+FROM INFORMATION_SCHEMA.TABLEs
+WHERE TABLE_SCHEMA  = 'loading_sources'
+
+DROP TABLE loading_sources.Departments_temp_company
+DROP TABLE loading_sources.Employees_temp_company
+DROP TABLE loading_sources.Projects_temp_company
+DROP TABLE loading_sources.Assignments_temp_company
+DROP TABLE loading_sources.Customers_temp_company
+DROP TABLE loading_sources.Orders_temp_company
+DROP TABLE loading_sources.Products_temp_company
+DROP TABLE loading_sources.OrderDetails_temp_company
+DROP TABLE loading_sources.Departments_temp_source
+DROP TABLE loading_sources.Employees_temp_source
+DROP TABLE loading_sources.Projects_temp_source
+DROP TABLE loading_sources.Assignments_temp_source
