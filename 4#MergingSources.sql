@@ -1,4 +1,4 @@
-USE DataWarehouse2
+USE DataWarehouse
 
 GO
 CREATE VIEW merged_Assignments AS

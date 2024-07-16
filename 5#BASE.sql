@@ -65,3 +65,32 @@ SELECT s_proj, ProjectID, ProjectName, StartDate, EndDate, Budget FROM merged_Pr
 INSERT INTO base_assignments(s_assign, s_proj, s_emp, AssignmentID, EmployeeID, ProjectID, Role, StartDate, EndDate)
 SELECT s_assign, s_proj, s_emp, AssignmentID, EmployeeID, ProjectID, Role, StartDate, EndDate FROM merged_Assignments;
 
+
+SELECT 
+    * 
+INTO 
+    base_customers
+ FROM 
+    CompanyDB.Sales.Customers;
+
+SELECT 
+    * 
+INTO 
+    base_orders
+ FROM 
+    CompanyDB.Sales.Orders;
+
+SELECT 
+    * 
+INTO 
+    base_products
+ FROM 
+    CompanyDB.Sales.Products;
+
+SELECT 
+    * 
+INTO 
+    base_orderDetails
+ FROM 
+    CompanyDB.Sales.OrderDetails;
+

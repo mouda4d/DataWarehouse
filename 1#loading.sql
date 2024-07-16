@@ -1,5 +1,5 @@
 
-CREATE DATABASE DataWarehouse2;
+CREATE DATABASE DataWarehouse;
 GO
 /*
 select 'DROP TABLE ' + TABLE_SCHEMA + '.' + TABLE_NAME FROM INFORMATION_SCHEMA.TABLEs;
@@ -18,7 +18,7 @@ DROP TABLE loading_sources.Projects_temp_company
 DROP TABLE loading_sources.Assignments_temp_company
 DROP procedure loading_temp_tables; 
 */
-USE DataWarehouse2;
+USE DataWarehouse;
 GO
 
 CREATE SCHEMA loading_sources;
