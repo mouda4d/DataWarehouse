@@ -1,4 +1,4 @@
-USE DataWarehouse;
+USE DataWarehouse2;
 
 GO
 

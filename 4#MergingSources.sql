@@ -1,20 +1,19 @@
-USE DataWarehouse
+USE DataWarehouse2
 
 GO
-
 CREATE VIEW merged_Assignments AS
 SELECT 
-    t1.s_assign AS s_assign1, t1.s_proj AS s_proj1, t1.s_emp AS s_emp1, t1.AssignmentID AS AssignmentID1, 
-    t1.EmployeeID AS EmployeeID1, t1.ProjectID AS ProjectID1, t1.Role AS Role1,
-     t1.AssignmentDate AS StartDate, NULL AS EndDate
+    t1.s_assign , t1.s_proj , t1.s_emp , t1.AssignmentID , 
+    t1.EmployeeID , t1.ProjectID  , t1.Role ,
+     t1.AssignmentDate AS StartDate, NULL AS EndDate, dataSource
 FROM 
     transformed_CompanyDB_Assignment t1
 
 UNION ALL
 
 SELECT 
-    t2.s_assign AS s_assign2, t2.s_proj AS s_proj2, t2.s_emp AS s_emp2, t2.AssignmentID AS AssignmentID2, 
-    t2.EmployeeID AS EmployeeID2, t2.ProjectID AS ProjectID2, t2.Role AS Role2, t2.StartDate, t2.EndDate
+    t2.s_assign , t2.s_proj , t2.s_emp , t2.AssignmentID , 
+    t2.EmployeeID , t2.ProjectID , t2.Role , t2.StartDate, t2.EndDate, datasource
 FROM 
     transformed_SourceDB_Assignment t2;
 
@@ -25,7 +24,7 @@ SELECT
     s_dep, 
     DepartmentID, 
     DepartmentName, 
-    Location
+    Location, datasource
 FROM 
     transformed_CompanyDB_Department
 
@@ -35,7 +34,7 @@ SELECT
     s_dep, 
     DepartmentID, 
     DepartmentName, 
-    Location
+    Location, datasource
 FROM 
     transformed_SourceDB_Department;
 GO
@@ -50,7 +49,7 @@ SELECT
     DepartmentID,
     HireDate,
     Position,
-    Salary
+    Salary,  datasource
 FROM 
     transformed_CompanyDB_Employee
 
@@ -65,7 +64,7 @@ SELECT
     DepartmentID,
     HireDate,
     NULL AS Position,
-    NULL AS Salary
+    NULL AS Salary, datasource
 FROM 
     transformed_SourceDB_Employee;
 
@@ -78,7 +77,7 @@ SELECT
     ProjectName,
     StartDate,
     EndDate,
-    NULL AS Budget
+    NULL AS Budget, datasource
 FROM 
     transformed_SourceDB_Project
 
@@ -90,7 +89,8 @@ SELECT
     ProjectName,
     StartDate,
     EndDate,
-    Budget
+    Budget,
+    dataSource
 FROM 
     transformed_CompanyDB_Project
 
