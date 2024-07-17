@@ -1,6 +1,6 @@
 
 -- Create the DataWarehouse database if it doesn't exist
-IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'DataWarehouse3')
+IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'DataWarehouse')
 BEGIN
     CREATE DATABASE DataWarehouse;
 END
