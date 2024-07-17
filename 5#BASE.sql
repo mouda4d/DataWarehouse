@@ -1,4 +1,4 @@
-USE datawarehouse
+USE DataWarehouse2
 
 IF NOT EXISTS (SELECT * FROM sys.tables WHERE name='base_departments')
 BEGIN
@@ -103,7 +103,7 @@ INTO
  FROM 
     loading_sources.orderDetails_temp_company;
 
-
+/*
 SELECT 'DROP TABLE ' + TABLE_SCHEMA + '.' + TABLE_NAME
 FROM INFORMATION_SCHEMA.TABLEs
 WHERE TABLE_SCHEMA  = 'loading_sources'
@@ -167,3 +167,4 @@ IF EXISTS (SELECT * FROM sys.tables WHERE name='Assignments_temp_source')
 BEGIN
 DROP TABLE loading_sources.Assignments_temp_source
 END
+*/
