@@ -2,8 +2,18 @@ USE DataWarehouse;
 
 GO
 
-CREATE SCHEMA surrogation;
+-- Check if the schema 'surrogation' exists, and create it if it doesn't
+IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'surrogation')
+BEGIN
+    EXEC('CREATE SCHEMA surrogation');
+END
+GO
 
+-- Drop the stored procedure if it exists
+IF OBJECT_ID('surrogate_table', 'P') IS NOT NULL
+BEGIN
+    DROP PROCEDURE surrogate_table;
+END
 GO
 
 CREATE  PROCEDURE surrogate_table

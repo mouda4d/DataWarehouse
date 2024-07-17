@@ -1,5 +1,14 @@
 USE DataWarehouse
 
+-- Drop views if they exist
+IF OBJECT_ID('merged_Assignments', 'V') IS NOT NULL
+    DROP VIEW merged_Assignments;
+IF OBJECT_ID('merged_Departments', 'V') IS NOT NULL
+    DROP VIEW merged_Departments;
+IF OBJECT_ID('merged_Employees', 'V') IS NOT NULL
+    DROP VIEW merged_Employees;
+IF OBJECT_ID('merged_Projects', 'V') IS NOT NULL
+    DROP VIEW merged_Projects;
 GO
 CREATE VIEW merged_Assignments AS
 SELECT 

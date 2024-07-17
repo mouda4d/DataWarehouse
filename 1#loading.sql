@@ -1,14 +1,28 @@
 
-CREATE DATABASE DataWarehouse;
-
+-- Create the DataWarehouse database if it doesn't exist
+IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'DataWarehouse')
+BEGIN
+    CREATE DATABASE DataWarehouse;
+END
 GO
 
 USE DataWarehouse;
 GO
 
-CREATE SCHEMA loading_sources;
-
+-- Check if the schema 'loading_sources' exists, and create it if it doesn't
+IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'loading_sources')
+BEGIN
+    EXEC('CREATE SCHEMA loading_sources');
+END
 GO
+
+-- Drop the stored procedure if it exists
+IF OBJECT_ID('loading_temp_tables', 'P') IS NOT NULL
+BEGIN
+    DROP PROCEDURE loading_temp_tables;
+END
+GO
+
 --drop PROCEDURE loading_temp_tables;
 CREATE PROCEDURE loading_temp_tables
     @tempTableName VARCHAR(128),

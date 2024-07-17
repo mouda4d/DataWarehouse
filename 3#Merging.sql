@@ -1,7 +1,25 @@
 USE DataWarehouse;
 
 GO
+-- Drop views if they exist
+IF OBJECT_ID('transformed_CompanyDB_Employee', 'V') IS NOT NULL
+    DROP VIEW transformed_CompanyDB_Employee;
+IF OBJECT_ID('transformed_CompanyDB_Department', 'V') IS NOT NULL
+    DROP VIEW transformed_CompanyDB_Department;
+IF OBJECT_ID('transformed_CompanyDB_Assignment', 'V') IS NOT NULL
+    DROP VIEW transformed_CompanyDB_Assignment;
+IF OBJECT_ID('transformed_CompanyDB_Project', 'V') IS NOT NULL
+    DROP VIEW transformed_CompanyDB_Project;
 
+IF OBJECT_ID('transformed_SourceDB_Employee', 'V') IS NOT NULL
+    DROP VIEW transformed_SourceDB_Employee;
+IF OBJECT_ID('transformed_SourceDB_Department', 'V') IS NOT NULL
+    DROP VIEW transformed_SourceDB_Department;
+IF OBJECT_ID('transformed_SourceDB_Assignment', 'V') IS NOT NULL
+    DROP VIEW transformed_SourceDB_Assignment;
+IF OBJECT_ID('transformed_SourceDB_Project', 'V') IS NOT NULL
+    DROP VIEW transformed_SourceDB_Project;
+GO
 ---------------------------------------------------------------------------------------------------------------------
 CREATE VIEW transformed_CompanyDB_Employee AS (
 SELECT 
