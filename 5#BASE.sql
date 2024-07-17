@@ -61,47 +61,48 @@ CREATE TABLE base_assignments (
 END
 
 INSERT INTO base_departments(s_dep, DepartmentID, DepartmentName, Location)
-SELECT s_dep, DepartmentID, DepartmentName, Location FROM merged_Departments;
+SELECT s_dep, DepartmentID, DepartmentName, Location FROM merged_Departments
+WHERE NOT EXISTS (SELECT 1 FROM base_departments WHERE s_dep = merged_Departments.s_dep);
+
 
 
 INSERT INTO base_Employees(s_emp, s_dep, EmployeeID, FirstName, LastName, DepartmentID, HireDate, Position, Salary)
-SELECT s_emp, s_dep, EmployeeID, FirstName, LastName, DepartmentID, HireDate, Position, Salary FROM merged_Employees;
+SELECT s_emp, s_dep, EmployeeID, FirstName, LastName, DepartmentID, HireDate, Position, Salary FROM merged_Employees
+WHERE NOT EXISTS (SELECT 1 FROM base_employees WHERE s_emp = merged_Employees.s_emp);
 
 INSERT INTO base_projects(s_proj, ProjectID, ProjectName, StartDate, EndDate, Budget)
-SELECT s_proj, ProjectID, ProjectName, StartDate, EndDate, Budget FROM merged_Projects;
+SELECT s_proj, ProjectID, ProjectName, StartDate, EndDate, Budget FROM merged_Projects
+WHERE NOT EXISTS (SELECT 1 FROM base_projects WHERE s_proj = merged_Projects.s_proj);
 
 
 INSERT INTO base_assignments(s_assign, s_proj, s_emp, AssignmentID, EmployeeID, ProjectID, Role, StartDate, EndDate)
-SELECT s_assign, s_proj, s_emp, AssignmentID, EmployeeID, ProjectID, Role, StartDate, EndDate FROM merged_Assignments;
+SELECT s_assign, s_proj, s_emp, AssignmentID, EmployeeID, ProjectID, Role, StartDate, EndDate FROM merged_Assignments
+WHERE NOT EXISTS (SELECT 1 FROM base_assignments WHERE s_assign = merged_Assignments.s_assign);
 
 
-SELECT 
-    * 
-INTO 
-    base_customers
- FROM 
-    loading_sources.Customers_temp_company;
+-- Create base_customers table if it doesn't exist and insert data
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'base_customers')
+BEGIN
+    SELECT * INTO base_customers FROM loading_sources.Customers_temp_company;
+END;
 
-SELECT 
-    * 
-INTO 
-    base_orders
- FROM 
-    loading_sources.orders_temp_company;
+-- Create base_orders table if it doesn't exist and insert data
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'base_orders')
+BEGIN
+    SELECT * INTO base_orders FROM loading_sources.orders_temp_company;
+END;
 
-SELECT 
-    * 
-INTO 
-    base_products
- FROM 
-    loading_sources.products_temp_company;
+-- Create base_products table if it doesn't exist and insert data
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'base_products')
+BEGIN
+    SELECT * INTO base_products FROM loading_sources.products_temp_company;
+END;
 
-SELECT 
-    * 
-INTO 
-    base_orderDetails
- FROM 
-    loading_sources.orderDetails_temp_company;
+-- Create base_orderDetails table if it doesn't exist and insert data
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'base_orderDetails')
+BEGIN
+    SELECT * INTO base_orderDetails FROM loading_sources.orderDetails_temp_company;
+END;
 
 /*
 SELECT 'DROP TABLE ' + TABLE_SCHEMA + '.' + TABLE_NAME
