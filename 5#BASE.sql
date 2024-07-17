@@ -1,4 +1,4 @@
-USE DataWarehouse2
+USE DataWarehouse;
 
 IF NOT EXISTS (SELECT * FROM sys.tables WHERE name='base_departments')
 BEGIN

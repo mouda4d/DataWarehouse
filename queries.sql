@@ -1,4 +1,4 @@
-USE DataWarehouse3;
+USE DataWarehouse;
 --QUESTIONS
 
 -- Question 1: Employee Details with Function Manipulation 1

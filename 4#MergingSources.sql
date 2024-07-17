@@ -1,4 +1,4 @@
-USE DataWarehouse
+USE DataWarehouse;
 
 -- Drop views if they exist
 IF OBJECT_ID('merged_Assignments', 'V') IS NOT NULL

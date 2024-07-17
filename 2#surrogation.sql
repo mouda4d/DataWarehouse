@@ -64,7 +64,7 @@ EXEC dbo.surrogate_table
     @id = 'EmployeeID',
     @dataSource = 'CompanyDB',
     --@sourceSchema = 'loading_sources',
-    --@sourceDatabase = 'DataWarehouse',
+    --@sourceDatabase = 'DataWarehouse2',
     @sourceTable = 'Employees_temp_company';
 
 EXEC dbo.surrogate_table
