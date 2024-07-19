@@ -1,4 +1,28 @@
-Data Warehousing Project Documentation
+# Data Warehousing Project Documentation
+
+
+## Order Of Execution:
+
+## First: CompanyDB
+#### 01 - Creation.sql
+#### 02 - Altering.sql
+
+## Second: SourceDB
+#### 01 - Create SourceDB.sql
+#### 02 - Create random data generator for SourceDB.sql
+
+## Third: DataWarehouse
+#### 1#loading.sql
+#### 2#surrogation.sql
+#### 3#Merging.sql
+#### 4#MergingSources.sql
+#### 5#BASE.sql
+
+## Fourth: Queries and Views
+#### EmployeeProjectAssignmentsView.sql
+#### queries.sql
+
+
 
 
 Script 1: Loading
