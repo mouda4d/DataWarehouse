@@ -1,6 +1,4 @@
-USE DataWarehouse;
 
-GO
 -- Drop views if they exist
 IF OBJECT_ID('transformed_CompanyDB_Employee', 'V') IS NOT NULL
     DROP VIEW transformed_CompanyDB_Employee;

@@ -1,4 +1,4 @@
-USE DataWarehouse;
+
 --QUESTIONS
 
 -- Question 1: Employee Details with Function Manipulation 1
@@ -9,9 +9,9 @@ SELECT
     LEN(position) AS position_length,
     DepartmentName
 FROM
-    base_employees emp
+    BASE.base_employees emp
 LEFT JOIN
-    base_Departments dep
+    BASE.base_Departments dep
 ON
     emp.s_dep = dep.s_dep;
 -------------------------------------------------------------------------------------------------------------------------
@@ -23,9 +23,9 @@ SELECT
     ROUND(SUM(Salary), 3) AS total_salary_expenditure, 
     COUNT(1) AS count_employees
 FROM
-    base_Departments dep
+    BASE.base_Departments dep
 LEFT JOIN
-    base_employees emp
+    BASE.base_employees emp
 ON 
     dep.s_dep = emp.s_dep
 GROUP BY 
@@ -40,13 +40,13 @@ SELECT
     FirstName + ' ' + LastName AS EmployeeName,
     [Role]
 FROM
-    base_projects proj
+    BASE.base_projects proj
 LEFT JOIN
-    base_assignments assign
+    BASE.base_assignments assign
 ON
     proj.s_proj = assign.s_proj
-INNER JOIN
-    base_employees emp
+LEFT JOIN
+    BASE.base_employees emp
 ON
     assign.s_emp = emp.s_emp;
 -------------------------------------------------------------------------------------------------------------------------
@@ -57,9 +57,9 @@ SELECT
     COUNT(1) AS count_orders,
     SUM(TotalAmount) AS total_amount_spent
 FROM
-    base_customers cust
+    BASE.base_customers cust
 INNER JOIN
-    base_orders orders
+    BASE.base_orders orders
 ON
     cust.CustomerID = orders.CustomerID
 GROUP BY 
@@ -68,15 +68,15 @@ GROUP BY
 -- Question 5: Product Details Extraction
 SELECT 
     LEFT(ProductName, 10) AS prod_name,
-    LEFT(Category, 2) AS productCategory,
+    LEFT(ProductName, 2) AS productCategory,
     SUM(Quantity) AS totalQuantity
 FROM
-    base_products prod 
+    BASE.base_products prod 
 LEFT JOIN
-    base_orderDetails od
+    BASE.base_orderDetails od
 ON
     prod.ProductID = od.ProductID
-GROUP BY LEFT(ProductName, 10), LEFT(Category, 2);
+GROUP BY LEFT(ProductName, 10), LEFT(ProductName, 2);
 -------------------------------------------------------------------------------------------------------------------------
 -- Question 6: High Salary Employees in Specific Departments
 WITH AVG_SALARY AS (
@@ -91,9 +91,9 @@ WITH AVG_SALARY AS (
         dep.DepartmentID,
         dep.DepartmentName
     FROM
-        base_employees emp
+        BASE.base_employees emp
     JOIN
-        base_departments dep 
+        BASE.base_departments dep 
     ON 
         emp.s_dep = dep.s_dep
 )
