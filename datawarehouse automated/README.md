@@ -2,6 +2,10 @@
 
 
 ## Order Of Execution:
+### EDIT:
+#### you can run the contents of masterscript.txt to run every script in the correct order
+
+
 
 ## First: CompanyDB
 #### 01 - Creation.sql
