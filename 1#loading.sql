@@ -2,11 +2,8 @@
 -- Create the DataWarehouse database if it doesn't exist
 IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'DataWarehouse')
 BEGIN
-    CREATE DATABASE DataWarehouse;
+    EXEC('CREATE SCHEMA DataWarehouse');
 END
-GO
-
-USE DataWarehouse;
 GO
 
 -- Check if the schema 'loading_sources' exists, and create it if it doesn't
@@ -27,7 +24,7 @@ GO
 CREATE PROCEDURE loading_temp_tables
     @tempTableName VARCHAR(128),
     @sourcetable VARCHAR(128),
-    @databaseName VARCHAR(128),
+    --@databaseName VARCHAR(128),
     @schemaName VARCHAR(128)
 AS
 BEGIN
@@ -39,7 +36,7 @@ BEGIN
         SET @sql2 = 
         CONCAT('SELECT * INTO ', 
                'loading_sources.', QUOTENAME(@tempTableName), ' ' ,
-               'FROM ', QUOTENAME(@databaseName), '.', QUOTENAME(@schemaName), '.', QUOTENAME(@sourcetable), ';');
+               'FROM ', QUOTENAME(@schemaName), '.', QUOTENAME(@sourcetable), ';');
 
         -- Execute the dynamic SQL
         EXEC sp_executesql @sql2;
@@ -51,73 +48,73 @@ GO
 EXEC loading_temp_tables
     @tempTableName = 'Departments_temp_company',
     @sourcetable = 'Departments',
-    @databaseName = 'CompanyDB',
-    @schemaName = 'Staff';
+    --@databaseName = 'CompanyDB',
+    @schemaName = 'Company';
 
 EXEC loading_temp_tables
     @tempTableName = 'Employees_temp_company',
     @sourcetable = 'Employees',
-    @databaseName = 'CompanyDB',
-    @schemaName = 'Staff';
+    --@databaseName = 'CompanyDB',
+    @schemaName = 'Company';
 
 EXEC loading_temp_tables
     @tempTableName = 'Projects_temp_company',
     @sourcetable = 'Projects',
-    @databaseName = 'CompanyDB',
-    @schemaName = 'Staff';
+    --@databaseName = 'CompanyDB',
+    @schemaName = 'Company';
 
 EXEC loading_temp_tables
     @tempTableName = 'Assignments_temp_company',
     @sourcetable = 'Assignments',
-    @databaseName = 'CompanyDB',
-    @schemaName = 'Staff';
+    --@databaseName = 'CompanyDB',
+    @schemaName = 'Company';
 ----------------------------------------------------------------------------------------------------------------------------
 --CompanyDB, Sales Schema
 EXEC loading_temp_tables
     @tempTableName = 'Customers_temp_company',
     @sourcetable = 'Customers',
-    @databaseName = 'CompanyDB',
-    @schemaName = 'Sales';
+    --@databaseName = 'CompanyDB',
+    @schemaName = 'Company';
 
 EXEC loading_temp_tables
     @tempTableName = 'Orders_temp_company',
     @sourcetable = 'Orders',
-    @databaseName = 'CompanyDB',
-    @schemaName = 'Sales';
+   -- @databaseName = 'CompanyDB',
+    @schemaName = 'Company';
 
 EXEC loading_temp_tables
     @tempTableName = 'Products_temp_company',
     @sourcetable = 'Products',
-    @databaseName = 'CompanyDB',
-    @schemaName = 'Sales';
+   -- @databaseName = 'CompanyDB',
+    @schemaName = 'Company';
 
 EXEC loading_temp_tables
     @tempTableName = 'OrderDetails_temp_company',
     @sourcetable = 'OrderDetails',
-    @databaseName = 'CompanyDB',
-    @schemaName = 'Sales';
+   -- @databaseName = 'CompanyDB',
+    @schemaName = 'Company';
 ------------------------------------------------------------------------------------------------------------------------------
 --SourceDB, dbo Schema
 EXEC loading_temp_tables
     @tempTableName = 'Departments_temp_source',
     @sourcetable = 'Departments',
-    @databaseName = 'SourceDB',
-    @schemaName = 'dbo';
+   -- @databaseName = 'SourceDB',
+    @schemaName = 'Source';
 
 EXEC loading_temp_tables
     @tempTableName = 'Employees_temp_source',
     @sourcetable = 'Employees',
-    @databaseName = 'SourceDB',
-    @schemaName = 'dbo';
+  --  @databaseName = 'SourceDB',
+    @schemaName = 'Source';
 
 EXEC loading_temp_tables
     @tempTableName = 'Projects_temp_source',
     @sourcetable = 'Projects',
-    @databaseName = 'SourceDB',
-    @schemaName = 'dbo';
+  --  @databaseName = 'SourceDB',
+    @schemaName = 'Source';
 
 EXEC loading_temp_tables
     @tempTableName = 'Assignments_temp_source',
     @sourcetable = 'Assignments',
-    @databaseName = 'SourceDB',
-    @schemaName = 'dbo';
+  --  @databaseName = 'SourceDB',
+    @schemaName = 'Source';

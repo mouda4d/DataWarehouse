@@ -1,6 +1,3 @@
-USE DataWarehouse;
-
-GO
 
 -- Check if the schema 'surrogation' exists, and create it if it doesn't
 IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'surrogation')
