@@ -1,0 +1,28 @@
+# Set connection details
+$server = "companysource.database.windows.net"
+$database = "datawarehouse"
+$username = "mouda3d4d5d"
+$password = 'P3$$word'
+$scriptsFolder = "C:\Users\mouda\OneDrive\Desktop\DataWarehouse-main"
+
+# List of SQL scripts to run in order
+$scripts = @(
+    "1 Creation.sql",
+    "2 Altering.sql",
+    "3 Create SourceDB.sql",
+    "4 Create random data generator for SourceDB.sql",
+    "5 loading.sql",
+    "6 surrogation.sql",
+    "7 Merging.sql",
+    "8 MergingSources.sql",
+    "9 BASE.sql",
+    "10 EmployeeProjectAssignmentsView.sql",
+    "11 queries.sql"
+)
+
+# Execute each script in order
+foreach ($script in $scripts) {
+    $scriptPath = Join-Path $scriptsFolder $script
+    Write-Host "Running $scriptPath"
+    Invoke-Sqlcmd -ServerInstance $server -Database $database -Username $username -Password $password -InputFile $scriptPath
+}
