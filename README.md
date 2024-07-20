@@ -2,6 +2,10 @@
 
 
 ## Order Of Execution:
+### EDIT:
+#### you can run the contents of masterscript.txt to run every script in the correct order
+
+
 
 ## First: CompanyDB
 #### 01 - Creation.sql
@@ -75,4 +79,3 @@ ________________________________________
 •	Information Retrieval: Each query addresses different aspects such as employee details, department budget summaries, project assignments, customer order analysis, product details extraction, and high-salary employees in specific departments.
 Execution:
 •	These queries leverage the structured data stored in the base_* tables to generate meaningful reports and insights for decision-making purposes. They demonstrate the capability of the data warehouse to support complex analytical queries and provide actionable intelligence to stakeholders.
-
