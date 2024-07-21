@@ -1,4 +1,4 @@
-# Set connection details
+# Set connection details Change scriptsfolder to your own folder that has the scripts and ofcourse the connection details if needed
 $server = "companysource.database.windows.net"
 $database = "datawarehouse"
 $username = "mouda3d4d5d"
