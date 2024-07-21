@@ -1,9 +1,8 @@
-
-IF OBJECT_ID ( 'CreateViews', 'P' ) IS NOT NULL
-    DROP PROCEDURE CreateViews;
+IF OBJECT_ID ( 'CreateViews_p', 'P' ) IS NOT NULL
+    DROP PROCEDURE CreateViews_p;
 GO
 
-create procedure CreateViews 
+create procedure CreateViews_p 
 as
 begin
     IF NOT EXISTS
@@ -26,7 +25,4 @@ begin
     on p.s_proj = a.s_proj
     ')
     end
-GO
-EXEC CreateViews 
-SELECT * from EmployeeProjectAssignments;
 

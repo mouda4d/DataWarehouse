@@ -1,3 +1,12 @@
+use testScripts;
+Go
+IF OBJECT_ID ( 'CreateRandomDataGeneratorForSource_p', 'P' ) IS NOT NULL
+    DROP PROCEDURE CreateRandomDataGeneratorForSource_p;
+GO
+
+CREATE PROCEDURE CreateRandomDataGeneratorForSource_p
+AS
+BEGIN
 -- Create random data generator for Employees
 DECLARE @EmployeeID INT = 4;
 DECLARE @Counter INT = 1;
@@ -63,4 +72,4 @@ BEGIN
     SET @AssignmentID = @AssignmentID + 1;
     SET @Counter = @Counter + 1;
 END
-GO
+END

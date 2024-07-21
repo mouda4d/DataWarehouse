@@ -1,16 +1,17 @@
-
-IF NOT EXISTS(SELECT * FROM sys.schemas WHERE name = 'Company')
-  BEGIN
-    EXEC('CREATE SCHEMA [Company]');
-  END
-GO
-
+use testScripts;
+Go
 IF OBJECT_ID ( 'CreateTables', 'P' ) IS NOT NULL
     DROP PROCEDURE CreateTables;
 GO   
 CREATE PROCEDURE CreateTables
 AS
 BEGIN
+  EXEC
+  ('IF NOT EXISTS(SELECT * FROM sys.schemas WHERE name = ''Company'')
+    BEGIN
+      EXEC(''CREATE SCHEMA [Company]'');
+    END
+  ');
 
   IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Departments' and xtype='U')
   BEGIN
@@ -169,7 +170,4 @@ VALUES
 
 --Commit transaction
 COMMIT;
-END
-GO
-
-EXEC CreateTables;
+END;

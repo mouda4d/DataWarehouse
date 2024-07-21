@@ -1,4 +1,9 @@
-
+IF OBJECT_ID ( 'Queries_p', 'P' ) IS NOT NULL
+    DROP PROCEDURE Queries_p;
+GO   
+CREATE PROCEDURE Queries_p
+AS
+BEGIN
 --QUESTIONS
 
 -- Question 1: Employee Details with Function Manipulation 1
@@ -108,3 +113,4 @@ FROM
     AVG_SALARY
 WHERE Salary > avg_salary_department;
 --QUALIFY emp.Salary > AVG(Salary) OVER(PARTITION BY dep. DepartmentID);
+END;

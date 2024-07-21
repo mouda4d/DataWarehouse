@@ -1,12 +1,22 @@
-
--- Check if the schema 'BASE' exists, and create it if it doesn't
-IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'BASE')
-BEGIN
-    EXEC('CREATE SCHEMA BASE');
-END
+use testScripts;
+Go
+IF OBJECT_ID ( 'Base_p', 'P' ) IS NOT NULL
+    DROP PROCEDURE Base_p;
 GO
 
-IF NOT EXISTS (SELECT * FROM sys.tables WHERE name='BASE.base_departments')
+CREATE PROCEDURE Base_p
+AS
+BEGIN
+EXEC('
+-- Check if the schema ''BASE'' exists, and create it if it doesn''t
+IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = ''BASE'')
+BEGIN
+    EXEC(''CREATE SCHEMA BASE'');
+END
+');
+
+EXEC
+('IF NOT EXISTS (SELECT * FROM sys.tables WHERE name=''base_departments'')
 BEGIN
 CREATE TABLE BASE.base_departments (
     s_dep INT PRIMARY KEY,
@@ -17,7 +27,7 @@ CREATE TABLE BASE.base_departments (
 )
 END
 
-IF NOT EXISTS (SELECT * FROM sys.tables WHERE name='base_employees')
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name=''base_employees'')
 BEGIN
 CREATE TABLE BASE.base_employees (
     s_emp INT PRIMARY KEY,
@@ -35,7 +45,7 @@ CREATE TABLE BASE.base_employees (
 )
 END
 
-IF NOT EXISTS (SELECT * FROM sys.tables WHERE name='base_projects')
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name=''base_projects'')
 BEGIN
 CREATE TABLE BASE.base_projects (
     s_proj INT PRIMARY KEY,
@@ -48,7 +58,7 @@ CREATE TABLE BASE.base_projects (
 )
 END
 
-IF NOT EXISTS (SELECT * FROM sys.tables WHERE name='base_assignments')
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name=''base_assignments'')
 BEGIN
 CREATE TABLE BASE.base_assignments (
     s_assign INT PRIMARY KEY,
@@ -65,12 +75,11 @@ CREATE TABLE BASE.base_assignments (
     insertion_timestamp DATETIME DEFAULT SYSUTCDATETIME() 
 )
 END
+');
 
 INSERT INTO BASE.base_departments(s_dep, DepartmentID, DepartmentName, Location)
 SELECT s_dep, DepartmentID, DepartmentName, Location FROM merged_Departments
 WHERE NOT EXISTS (SELECT 1 FROM BASE.base_departments WHERE s_dep = merged_Departments.s_dep);
-
-
 
 INSERT INTO BASE.base_Employees(s_emp, s_dep, EmployeeID, FirstName, LastName, DepartmentID, HireDate, Position, Salary)
 SELECT s_emp, s_dep, EmployeeID, FirstName, LastName, DepartmentID, HireDate, Position, Salary FROM merged_Employees
@@ -80,36 +89,35 @@ INSERT INTO BASE.base_projects(s_proj, ProjectID, ProjectName, StartDate, EndDat
 SELECT s_proj, ProjectID, ProjectName, StartDate, EndDate, Budget FROM merged_Projects
 WHERE NOT EXISTS (SELECT 1 FROM BASE.base_projects WHERE s_proj = merged_Projects.s_proj);
 
-
 INSERT INTO BASE.base_assignments(s_assign, s_proj, s_emp, AssignmentID, EmployeeID, ProjectID, Role, StartDate, EndDate)
 SELECT s_assign, s_proj, s_emp, AssignmentID, EmployeeID, ProjectID, Role, StartDate, EndDate FROM merged_Assignments
 WHERE NOT EXISTS (SELECT 1 FROM BASE.base_assignments WHERE s_assign = merged_Assignments.s_assign);
 
 
--- Create base_customers table if it doesn't exist and insert data
+-- Create base_customers table if it doesn''t exist and insert data
 IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'base_customers')
 BEGIN
     SELECT * INTO BASE.base_customers FROM loading_sources.Customers_temp_company;
 END;
 
--- Create base_orders table if it doesn't exist and insert data
+-- Create base_orders table if it doesn''t exist and insert data
 IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'base_orders')
 BEGIN
     SELECT * INTO BASE.base_orders FROM loading_sources.orders_temp_company;
 END;
 
--- Create base_products table if it doesn't exist and insert data
+-- Create base_products table if it doesn''t exist and insert data
 IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'base_products')
 BEGIN
     SELECT * INTO BASE.base_products FROM loading_sources.products_temp_company;
 END;
 
--- Create base_orderDetails table if it doesn't exist and insert data
+-- Create base_orderDetails table if it doesn''t exist and insert data
 IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'base_orderDetails')
 BEGIN
     SELECT * INTO BASE.base_orderDetails FROM loading_sources.orderDetails_temp_company;
 END;
-
+END;
 /*
 SELECT 'DROP TABLE ' + TABLE_SCHEMA + '.' + TABLE_NAME
 FROM INFORMATION_SCHEMA.TABLEs

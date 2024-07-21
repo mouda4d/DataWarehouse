@@ -1,15 +1,26 @@
-
--- Drop views if they exist
-IF OBJECT_ID('merged_Assignments', 'V') IS NOT NULL
-    DROP VIEW merged_Assignments;
-IF OBJECT_ID('merged_Departments', 'V') IS NOT NULL
-    DROP VIEW merged_Departments;
-IF OBJECT_ID('merged_Employees', 'V') IS NOT NULL
-    DROP VIEW merged_Employees;
-IF OBJECT_ID('merged_Projects', 'V') IS NOT NULL
-    DROP VIEW merged_Projects;
+use testScripts;
+Go
+IF OBJECT_ID ( 'MergingSources_p', 'P' ) IS NOT NULL
+    DROP PROCEDURE MergingSources_p;
 GO
-CREATE VIEW merged_Assignments AS
+
+CREATE PROCEDURE MergingSources_p
+AS
+BEGIN
+EXEC('
+-- Drop views if they exist
+IF OBJECT_ID(''merged_Assignments'', ''V'') IS NOT NULL
+    DROP VIEW merged_Assignments;
+IF OBJECT_ID(''merged_Departments'', ''V'') IS NOT NULL
+    DROP VIEW merged_Departments;
+IF OBJECT_ID(''merged_Employees'', ''V'') IS NOT NULL
+    DROP VIEW merged_Employees;
+IF OBJECT_ID(''merged_Projects'', ''V'') IS NOT NULL
+    DROP VIEW merged_Projects;
+')
+
+EXEC
+('CREATE VIEW merged_Assignments AS
 SELECT 
     t1.s_assign , t1.s_proj , t1.s_emp , t1.AssignmentID , 
     t1.EmployeeID , t1.ProjectID  , t1.Role ,
@@ -24,10 +35,10 @@ SELECT
     t2.EmployeeID , t2.ProjectID , t2.Role , t2.StartDate, t2.EndDate, datasource
 FROM 
     transformed_SourceDB_Assignment t2;
+');
 
-GO
-
-CREATE VIEW merged_Departments AS
+EXEC
+('CREATE VIEW merged_Departments AS
 SELECT 
     s_dep, 
     DepartmentID, 
@@ -45,8 +56,9 @@ SELECT
     Location, datasource
 FROM 
     transformed_SourceDB_Department;
-GO
+');
 
+EXEC('
 CREATE VIEW merged_Employees AS
 SELECT 
     s_emp,
@@ -75,10 +87,10 @@ SELECT
     NULL AS Salary, datasource
 FROM 
     transformed_SourceDB_Employee;
+');
 
-GO
-
-CREATE VIEW merged_Projects AS
+EXEC
+('CREATE VIEW merged_Projects AS
 SELECT 
     s_proj,
     ProjectID,
@@ -101,5 +113,5 @@ SELECT
     dataSource
 FROM 
     transformed_CompanyDB_Project
-
-GO
+');
+END;

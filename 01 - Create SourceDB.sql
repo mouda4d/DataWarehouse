@@ -1,9 +1,22 @@
--- Create SourceDB
-IF NOT EXISTS(SELECT * FROM sys.schemas WHERE name = 'Source')
-  BEGIN
-    EXEC('CREATE SCHEMA [Source]');
-  END
+use testScripts;
+Go
+IF OBJECT_ID ( 'CreateSource_p', 'P' ) IS NOT NULL
+    DROP PROCEDURE CreateSource_p;
 GO
+
+CREATE PROCEDURE CreateSource_p
+AS
+BEGIN
+-- Create SourceDB
+EXEC
+('IF NOT EXISTS(SELECT * FROM sys.schemas WHERE name = ''Source'')
+  BEGIN
+    EXEC(''CREATE SCHEMA [Source]'');
+  END
+  ');
+
+IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Employees' and xtype='U')
+BEGIN
 -- Create Departments table
 CREATE TABLE Source.Departments (
     DepartmentID INT PRIMARY KEY,
@@ -18,6 +31,8 @@ VALUES
 (2, 'Engineering', 'San Francisco'),
 (3, 'Marketing', 'Chicago');
 
+IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Employees' and xtype='U')
+BEGIN
 -- Create Employees table
 CREATE TABLE Source.Employees (
     EmployeeID INT PRIMARY KEY,
@@ -27,6 +42,7 @@ CREATE TABLE Source.Employees (
     HireDate DATE,
     FOREIGN KEY (DepartmentID) REFERENCES Source.Departments(DepartmentID)
 );
+END;
 
 -- Insert data into Employees
 INSERT INTO Source.Employees (EmployeeID, FirstName, LastName, DepartmentID, HireDate)
@@ -35,6 +51,8 @@ VALUES
 (2, 'Jane', 'Smith', 1, '2019-03-23'),
 (3, 'Michael', 'Johnson', 3, '2021-07-30');
 
+IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Projects' and xtype='U')
+BEGIN
 -- Create Projects table
 CREATE TABLE Source.Projects (
     ProjectID INT PRIMARY KEY,
@@ -42,6 +60,7 @@ CREATE TABLE Source.Projects (
     StartDate DATE,
     EndDate DATE
 );
+END;
 
 -- Insert data into Projects
 INSERT INTO Source.Projects (ProjectID, ProjectName, StartDate, EndDate)
@@ -50,6 +69,8 @@ VALUES
 (2, 'Project Beta', '2021-07-01', '2021-12-31'),
 (3, 'Project Gamma', '2022-01-01', NULL);
 
+IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Assignments' and xtype='U')
+BEGIN
 -- Create Assignments table
 CREATE TABLE Source.Assignments (
     AssignmentID INT PRIMARY KEY,
@@ -61,6 +82,7 @@ CREATE TABLE Source.Assignments (
     FOREIGN KEY (EmployeeID) REFERENCES Source.Employees(EmployeeID),
     FOREIGN KEY (ProjectID) REFERENCES Source.Projects(ProjectID)
 );
+END;
 
 -- Insert data into Assignments
 INSERT INTO Source.Assignments (AssignmentID, EmployeeID, ProjectID, Role, StartDate, EndDate)
@@ -68,4 +90,4 @@ VALUES
 (1, 1, 1, 'Developer', '2021-01-01', '2021-06-30'),
 (2, 2, 2, 'Manager', '2021-07-01', '2021-12-31'),
 (3, 3, 3, 'Analyst', '2022-01-01', NULL);
-GO
+END;

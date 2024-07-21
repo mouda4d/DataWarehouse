@@ -1,4 +1,5 @@
-
+use testScripts;
+Go
 IF OBJECT_ID ( 'CreateConstraintsAndRelationships', 'P' ) IS NOT NULL
     DROP PROCEDURE CreateConstraintsAndRelationships;
 GO
@@ -51,5 +52,3 @@ ADD CONSTRAINT CHK_Quantity CHECK (Quantity > 0);
 ALTER TABLE Company.OrderDetails
 ADD CONSTRAINT CHK_UnitPrice CHECK (UnitPrice > 0);
 END
-GO
-EXEC CreateConstraintsAndRelationships;
